@@ -1,8 +1,8 @@
-## Bliss
+# Bliss
 
-# This is a note taking app that I am creating as a task for 1811 labs
+## This is a note taking app that I am creating as a task for 1811 labs
 
-# Instructions for running
+## Instructions for running
 
 - Clone the repo
 - Run npm run dev

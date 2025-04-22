@@ -9,8 +9,6 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { login } from "@/lib/auth-actions";
-import SignInWithGoogleButton from "./google-button";
 
 export function LoginForm({
   className,
@@ -50,10 +48,9 @@ export function LoginForm({
                 </div>
                 <Input name="password" id="password" type="password" required />
               </div>
-              <Button type="submit" className="w-full" formAction={login}>
+              <Button type="submit" className="w-full">
                 Login
               </Button>
-              <SignInWithGoogleButton />
             </div>
             <div className="mt-4 text-center text-sm">
               Don&apos;t have an account?{" "}
