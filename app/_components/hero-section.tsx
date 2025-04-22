@@ -41,7 +41,7 @@ const HeroSection = () => {
             <div className="flex items-center justify-center">
               <div className="relative aspect-video overflow-hidden rounded-xl border bg-background shadow-xl">
                 <Image
-                  src="/placeholder.svg?height=1080&width=1920"
+                  src="/hero-screenshot.webp"
                   width={1920}
                   height={1080}
                   alt="App screenshot"
