@@ -1,7 +1,7 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { Button } from '@/components/ui/button'
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
 import {
   Sheet,
   SheetTrigger,
@@ -9,15 +9,15 @@ import {
   SheetHeader,
   SheetTitle,
   SheetClose,
-} from '@/components/ui/sheet'
-import { Menu, X } from 'lucide-react'
+} from "@/components/ui/sheet";
+import { Menu, X } from "lucide-react";
 
 interface SidebarProps {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
 export default function SidebarLayout({ children }: SidebarProps) {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
 
   return (
     <div className="flex h-screen">
@@ -25,7 +25,7 @@ export default function SidebarLayout({ children }: SidebarProps) {
       <aside
         className={
           `bg-white border-r transition-transform duration-300 hidden md:flex flex-col w-64 p-4 ` +
-          `${open ? 'translate-x-0' : '-translate-x-full'}`
+          `${open ? "translate-x-0" : "-translate-x-full"}`
         }
       >
         <div className="flex justify-between items-center mb-6">
@@ -87,10 +87,8 @@ export default function SidebarLayout({ children }: SidebarProps) {
           <h1 className="text-xl font-semibold">Page Title</h1>
         </header>
 
-        <section className="p-6">
-          {children}
-        </section>
+        <section className="p-6">{children}</section>
       </main>
     </div>
-  )
+  );
 }

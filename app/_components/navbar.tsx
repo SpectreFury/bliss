@@ -10,32 +10,6 @@ const Navbar = () => {
           <BookText className="h-6 w-6" />
           <span className="text-xl font-bold">Bliss</span>
         </div>
-        <nav className="hidden md:flex gap-6">
-          <Link
-            href="#features"
-            className="text-sm font-medium hover:underline underline-offset-4"
-          >
-            Features
-          </Link>
-          <Link
-            href="#testimonials"
-            className="text-sm font-medium hover:underline underline-offset-4"
-          >
-            Testimonials
-          </Link>
-          <Link
-            href="#pricing"
-            className="text-sm font-medium hover:underline underline-offset-4"
-          >
-            Pricing
-          </Link>
-          <Link
-            href="#faq"
-            className="text-sm font-medium hover:underline underline-offset-4"
-          >
-            FAQ
-          </Link>
-        </nav>
         <div className="flex items-center gap-4">
           <Link
             href="/login"
