@@ -8,21 +8,22 @@ import {
 } from "./ui/sidebar";
 import { ChevronRight } from "lucide-react";
 
-import { useNotesStore } from "@/store/useNotesStore";
+import { Note, useNotesStore } from "@/store/useNotesStore";
+import { useRouter } from "next/navigation";
 
 type SidebarProps = {
-  item: {
-    id: number;
-    title: string;
-  };
+  item: Note;
 };
 
 const SidebarItem = ({ item }: SidebarProps) => {
+  const router = useRouter();
+
   const selectedNote = useNotesStore((state) => state.selectedNote);
   const setSelectedNote = useNotesStore((state) => state.setSelectedNote);
 
   const handleItemClick = () => {
     setSelectedNote(item.id);
+    router.push(`/dashboard/${item.id}`);
   };
 
   return (

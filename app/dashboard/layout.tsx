@@ -20,6 +20,7 @@ import { ModeToggle } from "@/components/dark-mode-button";
 import { useNotesStore } from "@/store/useNotesStore";
 import CreateButton from "@/components/create-button";
 import React, { useCallback } from "react";
+import { AiDialog } from "@/components/ai-dialog";
 
 export default function DashboardLayout({
   children,
@@ -92,6 +93,7 @@ export default function DashboardLayout({
             </Breadcrumb>
           </div>
           <div className="flex items-center gap-2">
+            <AiDialog />
             <CreateButton />
             <ModeToggle />
           </div>
