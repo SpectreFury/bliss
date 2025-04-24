@@ -18,13 +18,9 @@ import { useAuthState, useSignOut } from "react-firebase-hooks/auth";
 import { useRouter } from "next/navigation";
 
 export default function SidebarProfile() {
-  // const [user, userLoading] = useAuthState(auth);
+  const [user] = useAuthState(auth);
   const [signOut] = useSignOut(auth);
   const router = useRouter();
-
-  // if (!user && !userLoading) {
-  //   return;
-  // }
 
   const logOut = async () => {
     await signOut();
@@ -37,13 +33,13 @@ export default function SidebarProfile() {
       <div className="flex items-center gap-3">
         <Avatar>
           <AvatarImage
-            // src={(user && user.photoURL) as string}
+            src={(user && user.photoURL) as string}
             alt="User Avatar"
           />
           <AvatarFallback>A</AvatarFallback>
         </Avatar>
         <div className="text-sm font-medium text-white dark:text-black">
-          {/* {user && user.displayName} */}
+          {user && user.displayName}
         </div>
       </div>
       <DropdownMenu>
