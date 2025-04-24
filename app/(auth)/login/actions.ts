@@ -78,9 +78,6 @@ export async function signInWithGoogle() {
     },
   });
 
-  console.log("Trying to sign in with google");
-  console.log(data);
-
   if (error) {
     redirect("/error");
   }
