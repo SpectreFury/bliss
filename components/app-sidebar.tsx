@@ -27,9 +27,17 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   // Fetch all notes from the user
 
   const getUsers = async () => {
-    const notesFromDb = await getNotesFromDb();
+    // const notesFromDb = await getNotesFromDb();
+    const notesArray = localStorage.getItem("notesArray");
 
-    setNotes(notesFromDb);
+    if (notesArray) {
+      const parsedNotesArray = JSON.parse(notesArray);
+
+      console.log(notes);
+      console.log(parsedNotesArray);
+
+      setNotes(parsedNotesArray);
+    }
   };
 
   useEffect(() => {

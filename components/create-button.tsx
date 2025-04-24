@@ -14,14 +14,34 @@ const CreateButton = () => {
     const title = "Untitled Note";
     const document = "Something";
 
-    const dbData = await createNoteOnServer({ title, document });
+    const notesArray = localStorage.getItem("notesArray");
+
+    // Already notes
+    const newNote = {
+      id: uuidv4(),
+      title: title,
+      document: document,
+    };
+
+    if (!notesArray) {
+      localStorage.setItem("notesArray", JSON.stringify([]));
+    } else {
+      const parsedNotes = JSON.parse(notesArray);
+      console.log("This is the notes array", parsedNotes);
+
+      parsedNotes.push(newNote);
+
+      localStorage.setItem("notesArray", JSON.stringify(parsedNotes));
+    }
+
+    // const dbData = await createNoteOnServer({ title, document });
 
     // Get the idea and update the state
-    const newNote = {
-      id: dbData.id,
-      title: dbData.title,
-      document: dbData.document,
-    } as Note;
+    // const newNote = {
+    //   id: dbData.id,
+    //   title: dbData.title,
+    //   document: dbData.document,
+    // } as Note;
 
     createNewNote(newNote);
   };
