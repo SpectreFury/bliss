@@ -22,6 +22,7 @@ export function AiDialog() {
   const [summary, setSummary] = useState("");
 
   async function fetchSummary() {
+    console.log("Sending the GENAI: ", noteContent);
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_SITE_URL}/api/chat`,
       {

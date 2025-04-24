@@ -11,6 +11,7 @@ import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { toast } from "sonner";
 import { Block } from "@blocknote/core";
+import { useDialogStore } from "@/store/useDialogStore";
 
 type EditorProps = {
   noteId: string;
@@ -21,6 +22,7 @@ const Editor = ({ noteId }: EditorProps) => {
 
   const editor = useCreateBlockNote();
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const setNoteContent = useDialogStore((state) => state.setNoteContent);
 
   const getEditorContent = async () => {
     const docRef = doc(db, "notes", noteId);
@@ -48,6 +50,8 @@ const Editor = ({ noteId }: EditorProps) => {
         note: JSON.stringify(editor.document),
       });
 
+      setNoteContent(JSON.stringify(editor.document));
+
       toast("Updated the notes to the database");
     }, 1000);
   }, [editor]);
@@ -61,7 +65,6 @@ const Editor = ({ noteId }: EditorProps) => {
       if (timer.current) clearTimeout(timer.current);
     };
   });
-
 
   return (
     <section className="mt-10 ml-10">
