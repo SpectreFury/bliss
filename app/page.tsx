@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect } from "react";
 import HeroSection from "./_components/hero-section";
 import Navbar from "./_components/navbar";
 import { auth } from "@/lib/firebase";
@@ -10,12 +9,6 @@ import { useRouter } from "next/navigation";
 export default function LandingPage() {
   const [user] = useAuthState(auth);
   const router = useRouter();
-
-  // useEffect(() => {
-  //   if (user) {
-  //     router.push("/dashboard");
-  //   }
-  // }, [user]);
 
   return (
     <div className="flex min-h-screen flex-col items-center">

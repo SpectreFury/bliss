@@ -4,53 +4,54 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 import { createClient } from "@/utils/supabase/server";
+import { auth } from "@/lib/firebase";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 
 export async function login(formData: FormData) {
-  const supabase = await createClient();
+  try {
+    const data = {
+      email: formData.get("email") as string,
+      password: formData.get("password") as string,
+    };
 
-  const data = {
-    email: formData.get("email") as string,
-    password: formData.get("password") as string,
-  };
+    const response = await signInWithEmailAndPassword(
+      auth,
+      data.email,
+      data.password
+    );
 
-  const { error } = await supabase.auth.signInWithPassword(data);
-
-  if (error) {
-    console.error("Login error", error);
-    redirect("/error");
+    if (response.user) {
+      revalidatePath("/", "layout");
+      redirect("/dashboard");
+    }
+  } catch (error) {
+    console.log("login error", error);
   }
-
-  revalidatePath("/", "layout");
-  redirect("/dashboard");
 }
 
 export async function signup(formData: FormData) {
-  const supabase = await createClient();
-  // type-casting here for convenience
-  // in practice, you should validate your inputs
+  try {
+    const data = {
+      email: formData.get("email") as string,
+      password: formData.get("password") as string,
+    };
 
-  const firstName = formData.get("first-name") as string;
-  const lastName = formData.get("last-name") as string;
+    const response = await createUserWithEmailAndPassword(
+      auth,
+      data.email,
+      data.password
+    );
 
-  const data = {
-    email: formData.get("email") as string,
-    password: formData.get("password") as string,
-    options: {
-      data: {
-        full_name: `${firstName} ${lastName}`,
-      },
-    },
-  };
-
-  const { error } = await supabase.auth.signUp(data);
-
-  if (error) {
-    console.error("Signup error", error);
-    redirect("/error");
+    if (response.user) {
+      revalidatePath("/", "layout");
+      redirect("/dashboard");
+    }
+  } catch (error) {
+    console.log("signup error", error);
   }
-
-  revalidatePath("/", "layout");
-  redirect("/dashboard");
 }
 
 export async function signout() {

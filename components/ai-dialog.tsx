@@ -13,6 +13,7 @@ import { Label } from "@/components/ui/label";
 import { useDialogStore } from "@/store/useDialogStore";
 import { Sparkles } from "lucide-react";
 import { useEffect, useState } from "react";
+import { ClipLoader } from "react-spinners";
 
 export function AiDialog() {
   const open = useDialogStore((state) => state.open);
@@ -20,9 +21,11 @@ export function AiDialog() {
   const noteContent = useDialogStore((state) => state.noteContent);
 
   const [summary, setSummary] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   async function fetchSummary() {
-    console.log("Sending the GENAI: ", noteContent);
+    setIsLoading(true);
+
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_SITE_URL}/api/chat`,
       {
@@ -37,6 +40,8 @@ export function AiDialog() {
 
       setSummary(result);
     }
+
+    setIsLoading(false);
   }
 
   useEffect(() => {
@@ -60,11 +65,13 @@ export function AiDialog() {
           <Sparkles />
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[425px] flex flex-col">
         <DialogHeader>
           <DialogTitle>Here is your summarized note</DialogTitle>
         </DialogHeader>
-        <div>{summary}</div>
+        <div className="self-center">
+          {isLoading ? <ClipLoader /> : <div>{summary}</div>}
+        </div>
       </DialogContent>
     </Dialog>
   );
