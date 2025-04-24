@@ -68,12 +68,19 @@ export async function signout() {
 export async function signInWithGoogle() {
   const supabase = await createClient();
 
-  console.log(process.env.NEXT_PUBLIC_SITE_URL);
+  // Get the site URL from environment or construct it
+  const siteUrl =
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    (process.env.NODE_ENV === "development"
+      ? "http://localhost:3000"
+      : `https://${process.env.VERCEL_URL || ""}`);
+
+  console.log("Sign in with Google - Site URL:", siteUrl);
 
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback?next=/dashboard`,
+      redirectTo: `${siteUrl}/auth/callback?next=/dashboard`,
       queryParams: {
         access_type: "offline",
         prompt: "consent",
@@ -82,22 +89,12 @@ export async function signInWithGoogle() {
   });
 
   if (error) {
+    console.error("Google sign in error:", error);
     redirect("/error");
   }
 
   if (data.url) {
+    console.log("Redirecting to Google OAuth URL:", data.url);
     redirect(data.url);
   }
-}
-
-export async function getUser() {
-  const supabase = await createClient();
-
-  const { data, error } = await supabase.auth.getUser();
-
-  if (error) {
-    redirect("/error");
-  }
-
-  return data;
 }

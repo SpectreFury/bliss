@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { signInWithGoogle } from "../actions";
+import { signIn } from "next-auth/react";
 
 const SignInWithGoogleButton = () => {
   return (
@@ -9,7 +9,7 @@ const SignInWithGoogleButton = () => {
       type="button"
       variant="outline"
       className="w-full"
-      onClick={signInWithGoogle}
+      onClick={() => signIn("google")}
     >
       Login with Google
     </Button>
