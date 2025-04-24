@@ -1,11 +1,6 @@
 import React from "react";
 
-import {
-  SidebarGroupContent,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-} from "./ui/sidebar";
+import { SidebarMenuButton, SidebarMenuItem } from "./ui/sidebar";
 import { ChevronRight } from "lucide-react";
 
 import { Note, useNotesStore } from "@/store/useNotesStore";
