@@ -17,31 +17,28 @@ import Link from "next/link";
 import SidebarProfile from "@/app/dashboard/_components/sidebar-profile";
 import SidebarItem from "./sidebar-item";
 
-import { useNotesStore } from "@/store/useNotesStore";
-import { getNotesFromDb } from "@/app/_actions/notes";
+import { Note, useNotesStore } from "@/store/useNotesStore";
+import { db } from "@/lib/firebase";
+import { collection, getDocs } from "firebase/firestore";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const notes = useNotesStore((state) => state.notes);
-  const setNotes = useNotesStore((state) => state.setNotes);
+  const { notes, setNotes } = useNotesStore();
+  const notesRef = collection(db, "notes");
 
-  // Fetch all notes from the user
+  const getNotes = async () => {
+    // Get notes from firebase
+    const snapshot = await getDocs(notesRef);
 
-  const getUsers = async () => {
-    // const notesFromDb = await getNotesFromDb();
-    const notesArray = localStorage.getItem("notesArray");
+    const notes = snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
 
-    if (notesArray) {
-      const parsedNotesArray = JSON.parse(notesArray);
-
-      console.log(notes);
-      console.log(parsedNotesArray);
-
-      setNotes(parsedNotesArray);
-    }
+    setNotes(notes as Note[]);
   };
 
   useEffect(() => {
-    getUsers();
+    getNotes();
   }, []);
 
   return (

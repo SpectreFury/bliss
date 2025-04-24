@@ -12,8 +12,8 @@ interface NotesState {
   notes: Note[];
   setSelectedNote: (id: string) => void;
   updateTitle: (newTitle: string, id: string) => void;
-  createNewNote: (note: Note) => void;
   setNotes: (notes: Note[]) => void;
+  addNote: (note: Note) => void;
 }
 
 const useNotesStore = create<NotesState>((set, get) => ({
@@ -26,9 +26,8 @@ const useNotesStore = create<NotesState>((set, get) => ({
         note.id === id ? { ...note, title: newTitle } : note
       ),
     })),
-  createNewNote: (note: Note) =>
-    set((state) => ({ notes: [...state.notes, note] })),
   setNotes: (notes: Note[]) => set((state) => ({ notes: notes })),
+  addNote: (note: Note) => set((state) => ({ notes: [...state.notes, note] })),
 }));
 
 export { useNotesStore, type Note };

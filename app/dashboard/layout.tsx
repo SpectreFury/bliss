@@ -21,6 +21,9 @@ import { useNotesStore } from "@/store/useNotesStore";
 import CreateButton from "@/components/create-button";
 import React, { useCallback } from "react";
 import { AiDialog } from "@/components/ai-dialog";
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "@/lib/firebase";
+import { toast } from "sonner";
 
 export default function DashboardLayout({
   children,
@@ -34,7 +37,7 @@ export default function DashboardLayout({
   const selectedNote = notes.find((note) => note.id === selectedNoteId);
 
   const handleTitleBlur = useCallback(
-    (e: React.FocusEvent<HTMLDivElement>) => {
+    async (e: React.FocusEvent<HTMLDivElement>) => {
       let newTitle = e.currentTarget.innerText.trim();
 
       if (newTitle === "") {
@@ -42,8 +45,16 @@ export default function DashboardLayout({
       }
 
       if (selectedNote && newTitle !== selectedNote.title) {
+        // update the note in firebase
+        const noteRef = doc(db, "notes", selectedNote.id);
+        await updateDoc(noteRef, {
+          title: newTitle,
+        });
+
         // update title store
         updateTitle(newTitle, selectedNote.id);
+
+        toast("Title has been changed");
       }
     },
     [selectedNote, selectedNoteId]

@@ -1,6 +1,7 @@
 // lib/firebase.js
 import { initializeApp, getApps, getApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -16,4 +17,5 @@ const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 
 // Export whatever Firebase services you need
 export const auth = getAuth(app);
+export const db = getFirestore(app);
 export default app;
