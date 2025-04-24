@@ -21,7 +21,6 @@ import { useNotesStore } from "@/store/useNotesStore";
 import CreateButton from "@/components/create-button";
 import React, { useCallback } from "react";
 import { AiDialog } from "@/components/ai-dialog";
-import { useRouter } from "next/navigation";
 
 export default function DashboardLayout({
   children,
