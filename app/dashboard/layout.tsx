@@ -21,7 +21,6 @@ import { useNotesStore } from "@/store/useNotesStore";
 import CreateButton from "@/components/create-button";
 import React, { useCallback } from "react";
 import { AiDialog } from "@/components/ai-dialog";
-import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 export default function DashboardLayout({
@@ -29,14 +28,6 @@ export default function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const router = useRouter();
-  const { data: session } = useSession();
-
-  if (!session || !session.user) {
-    router.push("/");
-    return;
-  }
-
   const notes = useNotesStore((state) => state.notes);
   const selectedNoteId = useNotesStore((state) => state.selectedNote);
   const updateTitle = useNotesStore((state) => state.updateTitle);
