@@ -48,6 +48,7 @@ export async function signup(formData: FormData) {
     console.error("Signup error", error);
     redirect("/error");
   }
+
   revalidatePath("/", "layout");
   redirect("/dashboard");
 }
