@@ -10,7 +10,7 @@ export default function NotePage() {
 
   return (
     <div>
-      <Editor noteId={noteId as string} />
+      {/* <Editor noteId={noteId as string} /> */}
     </div>
   );
 }

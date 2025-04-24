@@ -62,6 +62,7 @@ const Editor = ({ noteId }: EditorProps) => {
     };
   });
 
+
   return (
     <section className="mt-10 ml-10">
       <BlockNoteView
