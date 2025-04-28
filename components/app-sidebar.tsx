@@ -18,16 +18,23 @@ import SidebarProfile from "@/app/dashboard/_components/sidebar-profile";
 import SidebarItem from "./sidebar-item";
 
 import { Note, useNotesStore } from "@/store/useNotesStore";
-import { db } from "@/lib/firebase";
-import { collection, getDocs } from "firebase/firestore";
+import { auth, db } from "@/lib/firebase";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { notes, setNotes } = useNotesStore();
   const notesRef = collection(db, "notes");
+  const [user] = useAuthState(auth);
 
   const getNotes = async () => {
+    if (!user) return;
+
+    const notesRef = collection(db, "notes");
+    const q = query(notesRef, where("user", "==", user.uid));
+
     // Get notes from firebase
-    const snapshot = await getDocs(notesRef);
+    const snapshot = await getDocs(q);
 
     const notes = snapshot.docs.map((doc) => ({
       id: doc.id,
@@ -39,7 +46,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
   useEffect(() => {
     getNotes();
-  }, []);
+  }, [user]);
 
   return (
     <Sidebar {...props}>
